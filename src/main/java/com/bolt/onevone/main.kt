@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerChatEvent
+import java.io.File
 
 class oenvone : JavaPlugin(), CommandExecutor, Listener {
 
@@ -20,7 +21,19 @@ class oenvone : JavaPlugin(), CommandExecutor, Listener {
         }
     }
 
-override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        if (command.name.equals("1v1", ignoreCase = true)) {
+            if (sender is Player) {
+                val file = File(dataFolder, "message.txt")
+                if (!file.exists()) {
+                    sender.sendMessage("The message file does not exist.")
+                    return true
+                }
+                val message = file.readText()
+                sender.sendMessage(message)
+                return true
+            }
+        
         if (sender is Player) {
             val message = args.joinToString(separator = " ")
             val event = PlayerChatEvent(sender, message)
@@ -28,6 +41,11 @@ override fun onCommand(sender: CommandSender, command: Command, label: String, a
         }
         return true
     }
+        
+        return false
+    }
+}
+
 
     @EventHandler
     fun onPlayerChat(event: PlayerChatEvent) {
