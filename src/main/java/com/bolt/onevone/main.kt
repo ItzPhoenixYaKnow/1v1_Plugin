@@ -1,4 +1,4 @@
-package com.bolt.oenvone;
+package com.bolt.onevone;
 
 import org.bukkit.plugin.java.JavaPlugin
 
